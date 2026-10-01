@@ -101,6 +101,19 @@ class GameEngine:
         score_text = self.font.render(f"Score: {self.score}", True, WHITE)
         screen.blit(score_text, (10, 10))
 
-        if self.game_over and not getattr(self, "_game_over_logged", False):
-            print("Game over! Final score:", self.score)
-            self._game_over_logged = True
+        if self.game_over:
+            overlay = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+            overlay.fill((0, 0, 0, 160))
+            screen.blit(overlay, (0, 0))
+
+            title = self.font.render("Game Over", True, WHITE)
+            title_x = self.width // 2 - title.get_width() // 2
+            screen.blit(title, (title_x, self.height // 2 - 80))
+
+            final_score = self.font.render(f"Final Score: {self.score}", True, WHITE)
+            score_x = self.width // 2 - final_score.get_width() // 2
+            screen.blit(final_score, (score_x, self.height // 2 - 30))
+
+            if not getattr(self, "_game_over_logged", False):
+                print("Game over! Final score:", self.score)
+                self._game_over_logged = True

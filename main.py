@@ -19,12 +19,27 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+                break
+
+            if engine.game_over:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        running = False
+                    elif event.key == pygame.K_1:
+                        engine.restart("easy")
+                    elif event.key == pygame.K_2:
+                        engine.restart("medium")
+                    elif event.key == pygame.K_3:
+                        engine.restart("hard")
+                continue
+
             engine.handle_event(event)
 
-        engine.handle_input()
-        engine.update()
-        engine.render(SCREEN)
+        if not engine.game_over and running:
+            engine.handle_input()
+            engine.update()
 
+        engine.render(SCREEN)
         pygame.display.flip()
         clock.tick(FPS)
 

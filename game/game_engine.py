@@ -1,3 +1,6 @@
+import array
+import math
+
 import pygame
 
 from .hazard import Hazard
@@ -26,6 +29,8 @@ class GameEngine:
         self.score = 0
         self.game_over = False
         self._game_over_logged = False
+        self.sound_enabled = True
+        self.sounds = self._load_sounds()
         self.difficulty_name = "medium"
         self.start_x, self.start_y = 40, height - 120
         ground_y = height - 40
@@ -38,6 +43,39 @@ class GameEngine:
         self.hazards = [Hazard(240, ground_y - 14, 100)]
         self.set_difficulty(difficulty)
         self.reset_player()
+
+    def _load_sounds(self):
+        sounds = {}
+        try:
+            pygame.mixer.init()
+        except pygame.error:
+            self.sound_enabled = False
+            return sounds
+
+        for name, settings in {
+            "jump": (440, 80, 0.18),
+            "goal": (740, 110, 0.22),
+            "hit": (190, 200, 0.26),
+        }.items():
+            sounds[name] = self._make_sound(*settings)
+        return sounds
+
+    @staticmethod
+    def _make_sound(frequency, duration_ms, volume):
+        sample_rate = 22050
+        total_samples = int(sample_rate * duration_ms / 1000)
+        samples = array.array("h")
+        for index in range(total_samples):
+            angle = 2 * math.pi * frequency * (index / sample_rate)
+            samples.append(int(max(-32767, min(32767, volume * 32767 * math.sin(angle)))))
+        return pygame.mixer.Sound(buffer=samples.tobytes())
+
+    def _play_sound(self, name):
+        if not self.sound_enabled:
+            return
+        sound = self.sounds.get(name)
+        if sound is not None:
+            sound.play()
 
     def set_difficulty(self, difficulty):
         key = str(difficulty).lower()
@@ -72,6 +110,7 @@ class GameEngine:
             return
         if event.type == pygame.KEYDOWN and event.key in (pygame.K_SPACE, pygame.K_UP, pygame.K_w):
             self.player.jump()
+            self._play_sound("jump")
 
     def handle_input(self):
         if self.game_over:
@@ -118,14 +157,17 @@ class GameEngine:
         for hazard in self.hazards:
             if self.player.rect().colliderect(hazard.rect()):
                 self.game_over = True
+                self._play_sound("hit")
                 return
 
         if self.player.y > self.height:
             self.game_over = True
+            self._play_sound("hit")
             return
 
         if self.player.x >= self.goal_x:
             self.score += 1
+            self._play_sound("goal")
             self.player.x, self.player.y = self.start_x, self.start_y
             self.player.vy = 0
 

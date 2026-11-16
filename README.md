@@ -5,6 +5,7 @@ This project is a graphical platformer using **Pygame**. It introduces students 
 ## Lab 4 report and verification
 
 - [PDF report](output/pdf/Lab_4_Simple_Platformer_Report.pdf)
+- [Compact LLM conversation export](evidence/llm_conversation.json) from the report/review session (a JSON transcript, not a hosted chat share link).
 - [Saved test output](evidence/tests.txt) and [starter/final collision comparison](evidence/collision_comparison.txt)
 - Automated Pygame renders: [level](evidence/level.png), [Game Over](evidence/game_over.png), [Hard replay](evidence/replay_hard.png)
 
@@ -19,7 +20,7 @@ python tools/build_report.py
 
 The evidence script uses SDL dummy video/audio drivers and controlled states. Images are actual engine renders, not human gameplay recordings. Physical audio playback has not been assessed. Report generation uses ReportLab; it is not needed to play the game.
 
-The original submission checklist below also requires before/after gameplay videos and a complete chat page link. These were not present in the reviewed repository and remain separate submission items.
+The original submission checklist below asks for before/after gameplay videos and a complete chat page link. The student plans to demonstrate gameplay in person. A compact JSON transcript of the report/review conversation is included above; it does not contain the earlier task-implementation chats or constitute a hosted chat share link. The PDF records the evidence available when it was generated.
 
 ---
 

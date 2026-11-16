@@ -57,17 +57,24 @@ class GameEngine:
             "goal": (740, 110, 0.22),
             "hit": (190, 200, 0.26),
         }.items():
-            sounds[name] = self._make_sound(*settings)
+            try:
+                sounds[name] = self._make_sound(*settings)
+            except pygame.error:
+                self.sound_enabled = False
+                return {}
         return sounds
 
     @staticmethod
     def _make_sound(frequency, duration_ms, volume):
-        sample_rate = 22050
+        sample_rate, sample_format, channels = pygame.mixer.get_init()
+        if sample_format != -16:
+            raise pygame.error("Generated tones require signed 16-bit mixer audio")
         total_samples = int(sample_rate * duration_ms / 1000)
         samples = array.array("h")
         for index in range(total_samples):
             angle = 2 * math.pi * frequency * (index / sample_rate)
-            samples.append(int(max(-32767, min(32767, volume * 32767 * math.sin(angle)))))
+            sample = int(max(-32767, min(32767, volume * 32767 * math.sin(angle))))
+            samples.extend([sample] * channels)
         return pygame.mixer.Sound(buffer=samples.tobytes())
 
     def _play_sound(self, name):
@@ -109,8 +116,9 @@ class GameEngine:
         if self.game_over:
             return
         if event.type == pygame.KEYDOWN and event.key in (pygame.K_SPACE, pygame.K_UP, pygame.K_w):
-            self.player.jump()
-            self._play_sound("jump")
+            if self.player.on_ground:
+                self.player.jump()
+                self._play_sound("jump")
 
     def handle_input(self):
         if self.game_over:

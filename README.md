@@ -1,6 +1,25 @@
 # Real-Time Simple Platformer Game
 
-This project is a terminal-based platformer using **Pygame**. It introduces students to interactive game design using object-oriented principles and real-time graphical rendering.
+This project is a graphical platformer using **Pygame**. It introduces students to interactive game design using object-oriented principles and real-time graphical rendering.
+
+## Lab 4 report and verification
+
+- [PDF report](output/pdf/Lab_4_Simple_Platformer_Report.pdf)
+- [Saved test output](evidence/tests.txt) and [starter/final collision comparison](evidence/collision_comparison.txt)
+- Automated Pygame renders: [level](evidence/level.png), [Game Over](evidence/game_over.png), [Hard replay](evidence/replay_hard.png)
+
+All four task implementations were already present. The report review corrects mixer-format handling and airborne jump sounds, and replaces the ineffective restart test with real behavior checks. The final suite has 13 passing cases.
+
+```bash
+python -m pip install -r requirements-dev.txt
+python -m pytest test_game.py -v
+python tools/capture_evidence.py
+python tools/build_report.py
+```
+
+The evidence script uses SDL dummy video/audio drivers and controlled states. Images are actual engine renders, not human gameplay recordings. Physical audio playback has not been assessed. Report generation uses ReportLab; it is not needed to play the game.
+
+The original submission checklist below also requires before/after gameplay videos and a complete chat page link. These were not present in the reviewed repository and remain separate submission items.
 
 ---
 

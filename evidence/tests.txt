@@ -1,0 +1,31 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.14, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\Arun Hariharan\Documents\ChatGPT\SE\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: C:\Users\Arun Hariharan\Documents\ChatGPT\SE\L4_44_simple-platformer
+plugins: hypothesis-6.170.15, platformdirs-4.14.5
+collecting ... collected 13 items
+
+test_game.py::test_fast_fall_collision_resolves_onto_platform PASSED     [  7%]
+test_game.py::test_goal_reaches_score_and_resets_player PASSED           [ 15%]
+test_game.py::test_hazard_triggers_game_over PASSED                      [ 23%]
+test_game.py::test_player_does_not_land_when_not_over_platform PASSED    [ 30%]
+test_game.py::test_restart_changes_difficulty_and_resets_score[easy] PASSED [ 38%]
+test_game.py::test_restart_changes_difficulty_and_resets_score[medium] PASSED [ 46%]
+test_game.py::test_restart_changes_difficulty_and_resets_score[hard] PASSED [ 53%]
+test_game.py::test_restart_changes_difficulty_and_resets_score[unknown] PASSED [ 61%]
+test_game.py::test_falling_below_screen_ends_game_and_freezes_state PASSED [ 69%]
+test_game.py::test_jump_sound_only_plays_for_grounded_jump PASSED        [ 76%]
+test_game.py::test_generated_sound_matches_requested_duration PASSED     [ 84%]
+test_game.py::test_audio_initialization_failure_is_nonfatal PASSED       [ 92%]
+test_game.py::test_rising_player_does_not_snap_onto_platform PASSED      [100%]
+
+============================== warnings summary ===============================
+..\.venv\Lib\site-packages\pygame\pkgdata.py:25
+  C:\Users\Arun Hariharan\Documents\ChatGPT\SE\.venv\Lib\site-packages\pygame\pkgdata.py:25: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    from pkg_resources import resource_stream, resource_exists
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 13 passed, 1 warning in 0.68s ========================
+
+Exit code: 0

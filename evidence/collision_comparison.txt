@@ -1,0 +1,3 @@
+Controlled scenario: x=40, y=420, vy=90, platform top=460, height=32.
+Starter 140ee4d: y=510.6, vy=90.6, on_ground=False, game_over=True
+Final: y=428, vy=0, on_ground=True, game_over=False
